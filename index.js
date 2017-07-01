@@ -108,7 +108,6 @@ app.get('/auth/facebook/callback',
 app.get('/account', function(req, res) {
   if (req.isAuthenticated()) { 
     res.send({user: req.user});
-    push.sendNotification(); 
   } else {
     res.sendStatus(404);
   }
@@ -329,6 +328,7 @@ app.put('/user/:id', function(req, res) { //email: email, number:number, descrip
 app.post('/subs', (req, res) => {
   User.findById(req.body._id)
     .then(user => {
+      console.log(user);
       user.pushSub = req.body.subscription;
       return user.save();
     })
@@ -341,6 +341,7 @@ app.post('/subs', (req, res) => {
       res.status(500).send(err);
     });
 });
+
 
 
 //Server init to listen on port 3000 -> Needs to be altered for deployment
